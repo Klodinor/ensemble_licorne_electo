@@ -1,1 +1,4 @@
 Plan de travail Ensemble_licorne_electro
+
+
+- Traitera le signal audio reçu en plus de fournir un interface graphique.
