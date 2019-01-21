@@ -1,4 +1,62 @@
-Plan de travail Ensemble_licorne_electro
+###################### Énoncé ######################
+
+L’ensemble d’accéléromètre Électro
 
 
-- Traitera le signal audio reçu en plus de fournir un interface graphique.
+
+###################### Description ######################
+
+Le but de ce projet est de permettre à des interprètes de jouer de la musique en temps réel en utilisant seulement les mouvements de la tête. Ceci permettra à des personnes à mobilité réduite (quadraplégique) de pouvoir faire de la musique. 
+
+Dans le cadre de ce projet, je ferai  la conversion en données audio des données envoyées par les Arduinos. Ces Arduinos seront développés dans le cadre du cours en lutherie numérique. Pour ce faire, je ferai communiquer mes dispositifs avec un ordinateur grâce au langage de programmation Pyhton. Par la suite, grâce à de la synthèse sonore, je définirai un son propre à chaque instrument, jusqu’à un maximum de dix. Les timbres des divers instruments seront de l’un des deux types suivants : imitation de phénomènes sonores naturel (feu, vent, eau) ou purement synthétique. Pour finaliser la confection des timbres, je ferai du traitement sur le signal audio de chaque instrument en prévoyant une foule d’effets et plusieurs combinaisons de ceux-ci. L’activation des différents effets sera prédéfinie à l’intérieur de séquences. Il sera possible de lancer ces différentes séquences d’effets grâce à une interface graphique contrôlée via un contrôleur MIDI. Tout ce qui a trait à la création des timbres et des effets et de l’interface graphique, seront confectionnés grâce au langage de programmation Python et la librairie Pyo. 
+
+
+
+###################### Analyse des besoins ######################
+
+- Dispositif de "licorne" : comprend des accéléromètres rattachés à un Arduino et fixés à la tête des interprètes.  
+
+- Conversion en données audio du flux de données envoyé à l’ordinateur par les Arduinos (Ces deux premières étapes seront réalisées dans le cadre du cours de lutherie numérique).
+
+- Création d’instruments personnalisés à l’aide de sons de synthèse.
+
+- Création et agencement de différents effets venant enrichir et diversifier le timbre des divers instruments (par exemple : pitch shifter, distorsion, réverbération, délai, etc).  
+
+- Interface graphique : contrôle des volumes, gestion des séquences/effets, gestion du timbre initial propre à chaque interprète via un contrôleur MIDI.
+
+
+
+###################### Acquisition de connaissances ######################
+
+- Recherche sur la création de son de synthèse de correspondance "naturelle" et synthétique : Andy Farnell - Designing Sound
+
+- Communication entre protocole MIDI et Python/Pyo : Chapitre sur les contrôleurs externes dans les notes de cours de programmation musical en langage python & https://docs.wxpython.org/
+
+- Apprentissage de wxpython afin de créer l’interface graphique : https://docs.wxpython.org/ 
+
+- Approfondir mes connaissances avec le langage Python et la librairie Pyo : Note de cours de programmation musical en langage Python & API du langage lui-même https://docs.python.org/3/library/ 
+
+
+
+###################### Modèle ######################
+
+Ma première source d’inspiration dans la réalisation de ce projet est l’éponge de Martin Marier. J’en suis inspiré tant par les sonorités que par la méthode dont on en obtient des sons. Les sons produits par l’éponge jouent en continu et sont modifiés par le déplacement et les torsions appliqués à l’instrument. Ces différents mouvements sont détectés grâce à des accéléromètres. 
+
+Tout comme avec l’éponge, il sera possible grâce au dispositif fixé à la tête des participants de faire des mouvements de très faible envergure afin de modifier le son de l’instrument et les paramètres des effets rattachés à celui-ci. Par exemple, on pourrait venir modifier le gain d’une distorsion, le temps d’une réverbération, le degré de dissonance de la note jouée, etc. Plus la distance sera grande entre la position actuelle du dispositif par rapport à son axe de calibration, plus la modification des paramètres sera accentuée. Cependant, contrairement à l’éponge de Martin Marier où des boutons sont situés sous l’instrument afin de changer la nature du timbre, la note jouée ou encore les effets appliqués, ici ces opérations seront gérées par la personne dirigeant l’ensemble via une console et un contrôleur MIDI. Cette personne sera au courant du volume de chaque interprète, de la nature de leur timbre et des effets appliqués à l’instrument en question grâce à une interface graphique. Cette interface réagira au changement effectué sur le contrôleur MIDI afin que les informations qui y sont affichées soit toujours à jour. La personne en charge de l’ensemble verra également au bon déclenchement des différentes séquences composant la pièce jouée. 
+
+
+
+###################### Méthodes ######################
+
+Du côté de la programmation, mon projet sera constitué de plusieurs classes gérant les instruments ainsi que les effets. Il sera également composé de quelques fichiers externes renfermant le code de mon interface graphique. Il y aura donc une classe pour chaque instrument, une classe pour chaque effet que j’aurai confectionné, une classe pour chacune des combinaisons d’effets préexistant que j’aurai combinés et finalement une classe pour la gestion du contrôleur avec l’interface graphique via le protocole MIDI. Les séquences d’évènements, gérant entre autres l’activation des différents effets en fonction du temps seront également encapsulées à l’intérieur de classes. L’ensemble de ces classes et du code de l’interface graphique seront tous mise en relation à l’intérieur de mon fichier principal qui se nommera « index.py ». 
+
+L’interface graphique sera constituée des éléments suivants : une série de potentiomètres longs pour la gestion des volumes et une série de champs de textes affichant l’état des différents effets ainsi que la section courante. Ceci permettra au chef d’orchestre de faire l’état des informations pertinentes nécessaire au bon déroulement de la performance d’un simple coup d’œil. Rappelons que c’est avec un contrôleur MIDI que l’interface graphique sera mise en relation avec le programme audio.
+
+
+
+###################### Implémentation ######################
+
+
+
+
+###################### Test et maintenance ######################
