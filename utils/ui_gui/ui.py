@@ -4,29 +4,38 @@ Hello World, but with more meat.
 
 import wx
 
-class HelloFrame(wx.Frame):
+class mainFrame(wx.Frame):
     """
-    A Frame that says Hello World
+    Main User Interface
     """
 
     def __init__(self, *args, **kw):
         # ensure the parent's __init__ is called
-        super(HelloFrame, self).__init__(*args, **kw)
+        super(mainFrame, self).__init__(*args, **kw)
+        
+        #Met l'interface en full screen
+        self.Maximize()
+        
+        # create a panel in the frame - Panel s'insere dans le frame et permet de placer des elemets dessus
+        self.pnl = wx.Panel(self)
+        self.pnl.SetBackgroundColour("#777777")#set la couleur du panel
 
-        # create a panel in the frame
-        pnl = wx.Panel(self)
 
-        # and put some text with a larger bold font on it
-        st = wx.StaticText(pnl, label="Ensemble Électro", pos=(5,5))
-        font = st.GetFont()
-        font.PointSize += 10
-        font = font.Bold()
-        st.SetFont(font)
+        # and put some text with a larger bold font on it --> st = string, gere ce qui a trait au texte lui meme & font, tout ce qui a trait a la police de caractere 
+        self.st = wx.StaticText(self.pnl, label="Ensemble Accéléromètre Électro", pos=(5,5))
+        self.st.SetForegroundColour("#ffffff")
+        self.font = self.st.GetFont()
+        self.font.PointSize += 5
+        #font = font.Bold()
+        self.st.SetFont(self.font)
 
         # create a menu bar
         self.makeMenuBar()
+        
+        #initialise un slider
+        '''sizer1 = self.createFreqSlider()'''
 
-        # and a status bar
+        # and a status bar -- un footer 
         self.CreateStatusBar()
         self.SetStatusText("Main User interface")
 
@@ -38,21 +47,22 @@ class HelloFrame(wx.Frame):
         when the menu item is selected.
         """
 
-        # Make a file menu with Hello and Exit items
+        ''' Fait la création de l'onglet file --> wx.menu & creer ces deux sous-menu 'hello' et 'exit '''
         fileMenu = wx.Menu()
-        # The "\t..." syntax defines an accelerator key that also triggers
-        # the same event
-        helloItem = fileMenu.Append(-1, "&Hello...\tCtrl-H",
-                "Help string shown in status bar for this menu item")
+        # The "\t..." syntax defines an accelerator key that also triggers --> bref gestiond des 'shortcut'
+        helloItem = fileMenu.Append(-1, "&Hello...\tCtrl-H", "Cette phrase apparaît au bas de l'ecran")
+        #Le separateur par defaut des menu standart, purement visuel
         fileMenu.AppendSeparator()
         # When using a stock ID we don't need to specify the menu item's
-        # label
         exitItem = fileMenu.Append(wx.ID_EXIT)
 
-        # Now a help menu for the about item
+
+
+        '''Fait la creation de l'onglet help'''
         helpMenu = wx.Menu()
         aboutItem = helpMenu.Append(wx.ID_ABOUT)
 
+        '''Creer la barre de menu elle-meme et y ajoute/append les deux menu cree ci-haut --> le "&Nom" = le nom du menu en question '''
         # Make the menu bar and add the two menus to it. The '&' defines
         # that the next letter is the "mnemonic" for the menu item. On the
         # platforms that support it those letters are underlined and can be
@@ -71,7 +81,28 @@ class HelloFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.OnExit,  exitItem)
         self.Bind(wx.EVT_MENU, self.OnAbout, aboutItem)
 
-
+    '''
+    def createFreqSlider(self):
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        label = wx.StaticText(self.panel, -1, "Volume Instrument 1")
+        sizer.Add(label, 0, wx.CENTER|wx.ALL, 5)
+        self.freq = PyoGuiControlSlider(parent=self.panel,
+                                        minvalue=20,
+                                        maxvalue=20000,
+                                        init=1000,
+                                        pos=(0, 0),
+                                        size=(200, 16),
+                                        log=True,
+                                        integer=False,
+                                        powoftwo=False,
+                                        orient=wx.HORIZONTAL)
+        #print(self.freq.getRange())
+        #print(self.freq.isPowOfTwo())
+        self.freq.Bind(EVT_PYO_GUI_CONTROL_SLIDER, self.changeFreq)
+        sizer.Add(self.freq, 0, wx.ALL | wx.EXPAND, 5)
+        return sizer
+        '''
+        
     def OnExit(self, event):
         """Close the frame, terminating the application."""
         self.Close(True)
@@ -89,10 +120,11 @@ class HelloFrame(wx.Frame):
                       wx.OK|wx.ICON_INFORMATION)
 
 
-if __name__ == '__main__':
+#if __name__ == '__main__':
     # When this module is run (not imported) then create the app, the
     # frame, show it, and start the event loop.
-    app = wx.App()
-    frm = HelloFrame(None, title='Hello World 2')
-    frm.Show()
-    app.MainLoop()
+app = wx.App()
+#app.Maximize(True)
+frm = mainFrame(None, title='Ensemble Accéléromètre Électro')
+frm.Show()
+app.MainLoop()
