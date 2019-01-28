@@ -36,6 +36,7 @@
 #X obj 122 61 *~;
 #X obj 122 84 -~ 0.125;
 #X text 147 59 --BUG--;
+#X text 315 191 pow 2 ou signal*signal;
 #X connect 0 0 1 0;
 #X connect 1 0 2 0;
 #X connect 2 0 3 0;
@@ -63,6 +64,8 @@
 #X obj 92 187 outlet~;
 #X obj 106 64 lop~ 3;
 #X text 233 66 Voir pour Max~ en pyhton;
+#X text 213 23 tone = lop & lop*2 = butLP;
+#X text 253 236 hip = atone;
 #X connect 0 0 1 0;
 #X connect 1 0 2 0;
 #X connect 2 0 3 0;
