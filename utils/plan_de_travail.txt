@@ -92,3 +92,18 @@ graphique sera mise en relation avec le programme audio.
 
 
 ###################### Test et maintenance ######################
+
+
+
+############# Commentaires ###############
+
+Excellent projet!
+
+En ce qui concerne wxPython, la ressource par excellence est une application demo qui illustre pratiquement toutes les classes disponibles, avec vue sur le code. Tu peux la télécharger à cette addresse:
+
+https://extras.wxpython.org/wxPython4/extras/4.0.4/
+
+Petit conseil, travaille avec peu de sonorités et d'effets pour commencer. Assures-toi que la communication fonctionne et que le système fait tout ce dont tu as besoin. Après, il sera facile de compléter la liste des sources et des effets.
+
+10/10
+
