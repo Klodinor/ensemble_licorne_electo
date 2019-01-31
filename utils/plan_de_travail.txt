@@ -76,7 +76,7 @@ Du côté de la programmation, mon projet sera constitué de plusieurs classes géra
 de quelques fichiers externes renfermant le code de mon interface graphique. Il y aura donc une classe pour chaque instrument, une classe pour chaque 
 effet que j’aurai confectionné, une classe pour chacune des combinaisons d’effets préexistant que j’aurai combinés et finalement une classe pour la 
 gestion du contrôleur avec l’interface graphique via le protocole MIDI. Les séquences d’évènements, gérant entre autres l’activation des différents 
-effets en fonction du temps seront également encapsulées à l’intérieur de classes. L’ensemble de ces classes et du code de l’interface graphique 
+effets en fonction du temps seront également encapsulées à l’intériesur de classes. L’ensemble de ces classes et du code de l’interface graphique 
 seront tous mise en relation à l’intérieur de mon fichier principal qui se nommera « index.py ». 
 
 L’interface graphique sera constituée des éléments suivants : une série de potentiomètres longs pour la gestion des volumes et une série de champs 

@@ -16,12 +16,13 @@
 #X obj 116 398 hip~ 500;
 #X obj 117 491 *~;
 #X obj 146 430 hsl 64 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 4300 1;
+-1 -1 0 1;
 #X msg 143 450 \$1 20;
 #X obj 143 473 line~;
 #X obj 117 514 dac~;
 #X obj 116 352 *~ 0.5;
 #X obj 117 37 gaussianoise 0.4;
+#X text 174 82 Rendu ici;
 #X connect 0 0 1 0;
 #X connect 1 0 2 0;
 #X connect 1 0 2 1;
