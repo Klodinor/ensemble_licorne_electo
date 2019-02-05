@@ -11,7 +11,7 @@ class SerialServer(threading.Thread):
         threading.Thread.__init__(self)
         self.daemon = True
         # Change le port a ouvrir...
-        self.serial = serial.Serial('/dev/ttyUSB0', 9600)
+        self.serial = serial.Serial('/dev/ttyUSB0', 115200)
 
     def run(self):
         while 1:
