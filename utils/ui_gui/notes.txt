@@ -1,0 +1,38 @@
+################################################ Notes Gui ################################################ 
+
+- 10 potentiomètres de type slider pour le contrôle du gain des instrumentistes.
+
+
+
+- Série de toggle on/off avec dropdown pour la sélection/activation des effets (entre 4 et 6 (?)-- à déterminer).
+
+
+
+- Dropdown pour la sélection des instruments/timbres de départ, un dropdown par instrumentiste. Pas besoin de on/off, à cause des potentiomètre pour le volume (on coupe le son pour changer d'instruments ou durant le jeu).
+
+
+
+- Reste à voir pour l'activation des séquences/sections. 
+
+
+
+- Voir 2.1.4, des notes sur wxPyhton pour les callback functions.
+-- Btn = wx.EVT_TOGGLEBUTTON 
+-- Dropdown = wx.EVT_CHOICE
+-- slider = wx.EVT_SLIDER
+-- Pour le moment aucune fonction n'est apellée ou écrite pour la gestion des événements en lien avec les éléments de l'interface graphique
+
+
+
+- 2.2 - Sélecteur d'effets! (p.26)
+-- Chapitre 02/10 fx switch.py
+-- Le chapitre 03 sur wx.python est l'extension de ce paragraphe (du moins la première section)
+
+
+
+- 2.3 Synthétiseur FM avec contrôle Midi et interface graphique! (p.29)
+-- chapitre 02/11 fm synth.py
+
+
+
+- Voir 2.1.5, pour gérer les données audio avant de céder le serveur à l'interface graphique.

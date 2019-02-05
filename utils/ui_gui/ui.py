@@ -31,9 +31,32 @@ class mainFrame(wx.Frame):
 
         # create a menu bar
         self.makeMenuBar()
+
+
+        '''Init des slider, btn & dropdown de mon interface -- provient des notes d'Olivier Belanger'''
+        ############# FIN initialise la premiere barre d'effet pour l'instrumentiste 01#############
+        self.onOffText = wx.StaticText(self.pnl, id=-1, label="Inst_01 effets", 
+                                       pos=(10, 40), size=wx.DefaultSize)
+        self.onOff = wx.ToggleButton(self.pnl, id=-1, label="On/Off", 
+                                     pos=(8, 58), size=wx.DefaultSize)
+
+        # Liste de son contenus dans le meme dossier que le script
+        effets = ['Delai', 'Disto', 'Reverb', 'Harmonizer']
+        self.popupText = wx.StaticText(self.pnl, id=-1, 
+                                       label="Choisir un effet",
+                                       pos=(10, 90), size=wx.DefaultSize)
+        self.popup = wx.Choice(self.pnl, id=-1, pos=(8, 105), 
+                               size=(150, -1), choices=effets)
+        self.popup.SetSelection(0)
+        ############# FIN initialise la premiere barre d'effet pour l'instrumentiste 01#############    
         
-        #initialise un slider
-        '''sizer1 = self.createFreqSlider()'''
+        #Label Slider volume instrument 01
+        self.pitText = wx.StaticText(self.pnl, id=-1, label="Inst_01 Volume", pos=(610, 60), size=wx.DefaultSize)
+        #Slider volume instrument 01
+        self.pit = wx.Slider(self.pnl, style=wx.SL_VERTICAL, id=1, value=0, minValue=0, maxValue=100, pos=(635, 82), size=(-1, 250))#Ou 0 = 0 & 100 = 1
+        #fonction de callBack a defenir
+        #self.pit.Bind(wx.EVT_SLIDER, self.changeVolume)
+        ''' FIN Init des slider, btn & dropdown de mon interface -- provient des notes d'Olivier Belanger'''
 
         # and a status bar -- un footer 
         self.CreateStatusBar()
