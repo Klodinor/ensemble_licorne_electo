@@ -36,3 +36,27 @@
 
 
 - Voir 2.1.5, pour gérer les données audio avant de céder le serveur à l'interface graphique.
+
+
+
+- Voir PyoGuiControlSlider --> Pour avoir des slider en log. (Ex: Freq coupure d'un filtre)
+-- Nous donne un slider comme dans Cecilia.
+
+
+
+- Faire class Audio pour gestion des événements audio ? (voir exemple OLivier Bélanger)
+
+
+
+- Je vais peut-être devoir faire plusieurs copies de mes fonctions pour chaque instance de mes éléments graphiques (un slider de volume à sa propre fonction pour gérer le volume)
+-- Trouver un work around
+
+
+
+
+
+################################################ DONE ################################################
+
+- Les sliders verticals sont à 0 en haut et 100 en bas. Je dois trouver une manière de contourner le problème. -- FIX AVEC LES STYLES
+-- Simplement traiter les données pour faire l'inverse.
+-- Une solution possible est de mettre le slider dans un 'panel' qui lui est propre et repositionner celui-là

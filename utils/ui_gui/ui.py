@@ -3,6 +3,12 @@ Hello World, but with more meat.
 """
 
 import wx
+from pyo import *
+
+_server = Server().boot()
+
+sineTest = Sine(freq=440).mix(2).out()
+
 
 class mainFrame(wx.Frame):
     """
@@ -31,31 +37,51 @@ class mainFrame(wx.Frame):
 
         # create a menu bar
         self.makeMenuBar()
-
+        
+        """Gestion Acticvation du serveur Audio"""
+        self.onOffText = wx.StaticText(self.pnl, id=-1, label="Audio",
+                                       pos=(28,30), size=wx.DefaultSize)
+        self.onOff = wx.ToggleButton(self.pnl, id=-1, label="on / off",
+                                     pos=(10,48), size=wx.DefaultSize)
+        # Un event du toggle appelle la methode self.handleAudio
+        self.onOff.Bind(wx.EVT_TOGGLEBUTTON, self.handleAudio)
+        """Gestion Acticvation du serveur Audio"""
+        
 
         '''Init des slider, btn & dropdown de mon interface -- provient des notes d'Olivier Belanger'''
-        ############# FIN initialise la premiere barre d'effet pour l'instrumentiste 01#############
-        self.onOffText = wx.StaticText(self.pnl, id=-1, label="Inst_01 effets", 
-                                       pos=(10, 40), size=wx.DefaultSize)
-        self.onOff = wx.ToggleButton(self.pnl, id=-1, label="On/Off", 
-                                     pos=(8, 58), size=wx.DefaultSize)
+        ############# Initialise la premiere barre d'effet pour l'instrumentiste 01#############
+        self.onOffText_effet01 = wx.StaticText(self.pnl, id=-1, label="Inst_01 effets", 
+                                       pos=(10, 80), size=wx.DefaultSize)
+        self.onOff_effet01 = wx.ToggleButton(self.pnl, id=-1, label="On/Off", 
+                                     pos=(8, 100), size=wx.DefaultSize)
 
         # Liste de son contenus dans le meme dossier que le script
         effets = ['Delai', 'Disto', 'Reverb', 'Harmonizer']
         self.popupText = wx.StaticText(self.pnl, id=-1, 
                                        label="Choisir un effet",
-                                       pos=(10, 90), size=wx.DefaultSize)
-        self.popup = wx.Choice(self.pnl, id=-1, pos=(8, 105), 
+                                       pos=(10, 130), size=wx.DefaultSize)
+        self.popup = wx.Choice(self.pnl, id=-1, pos=(8, 145), 
                                size=(150, -1), choices=effets)
         self.popup.SetSelection(0)
         ############# FIN initialise la premiere barre d'effet pour l'instrumentiste 01#############    
         
+
+        
+        instType = ['Vent Feuilles', 'Pluie', 'Vent', 'Synth']
+        self.popupText_ints01 = wx.StaticText(self.pnl, id=-1, 
+                                       label="Choisir un instrument",
+                                       pos=(610, 10), size=wx.DefaultSize)
+        self.popup_ints01 = wx.Choice(self.pnl, id=-1, pos=(605, 30), 
+                               size=(150, -1), choices=instType)
+        self.popup_ints01.SetSelection(0)
+        self.popup_ints01.Bind(wx.EVT_CHOICE, self.changeInst)
+        
         #Label Slider volume instrument 01
-        self.pitText = wx.StaticText(self.pnl, id=-1, label="Inst_01 Volume", pos=(610, 60), size=wx.DefaultSize)
+        self.volInst01 = wx.StaticText(self.pnl, id=-1, label="Inst_01 Volume", pos=(610, 60), size=wx.DefaultSize)
         #Slider volume instrument 01
-        self.pit = wx.Slider(self.pnl, style=wx.SL_VERTICAL, id=1, value=0, minValue=0, maxValue=100, pos=(635, 82), size=(-1, 250))#Ou 0 = 0 & 100 = 1
+        self.volInst01 = wx.Slider(self.pnl, style=wx.SL_VERTICAL|wx.SL_INVERSE|wx.SL_LABELS, id=1, value=0, minValue=0, maxValue=100, pos=(605, 82), size=(-1, 250))#Ou 0 = 0 & 100 = 1
         #fonction de callBack a defenir
-        #self.pit.Bind(wx.EVT_SLIDER, self.changeVolume)
+        self.volInst01.Bind(wx.EVT_SLIDER, self.changeVolume)
         ''' FIN Init des slider, btn & dropdown de mon interface -- provient des notes d'Olivier Belanger'''
 
         # and a status bar -- un footer 
@@ -141,6 +167,31 @@ class mainFrame(wx.Frame):
         wx.MessageBox("This is a wxPython Hello World sample",
                       "About Hello World 2",
                       wx.OK|wx.ICON_INFORMATION)
+    #Gestion activation de l'audio
+    def handleAudio(self, evt):
+        if evt.GetInt() == 1:
+            _server.start()
+        else:
+            _server.stop()
+            
+    def changeVolume(self, evt):
+        x = evt.GetInt() / 100
+        #self.volInst01.SetLabel("Volume : %.3f" % x)
+        sineTest.mul = x
+        print(x)
+        
+    def changeInst(self, evt):
+        x = evt.GetInt()
+        #Activer une classe de l'instrument en question
+        if x==0:
+            print('Vent Feuilles')
+        elif x==1:
+            print('Pluie')
+        elif x==2:
+            print('Vent')
+        else:
+            print('Synth')
+
 
 
 #if __name__ == '__main__':
