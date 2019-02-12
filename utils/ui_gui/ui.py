@@ -1,18 +1,14 @@
-"""
-Hello World, but with more meat.
-"""
-
 import wx
 from pyo import *
 
-_server = Server().boot()
+#_server = Server().boot()
 
-sineTest = Sine(freq=440).mix(2).out()
+#sineTest = Sine(freq=440).mix(2).out()
 
 
 class mainFrame(wx.Frame):
     """
-    Main User Interface
+    Interface utilisateur principal
     """
 
     def __init__(self, *args, **kw):
