@@ -2,6 +2,7 @@
 Fichier principal
 '''
 from pyo import *
+import math
 #from utils import ui 
 
 _server = Server(sr=44100, nchnls=2, buffersize=512, duplex=1).boot()
