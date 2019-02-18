@@ -2,11 +2,13 @@ from pyo import *
 import random
 
 _server = Server(sr=44100, nchnls=2, buffersize=512, duplex=1).boot()
+_server.amp = 0.1
 
 class Feu:
     """Feu"""
     def __init__(self):
         self.noise01 = Noise()
+        #faire methode .out() ou je fais la somme des trois methode ci-bas et la ca va marcher.
         #modifier aussi ces valeurs avec donnees capteur?
         self.crackling = self.crackling(self.noise01)*0.2
         self.hissing01 = self.hissing(self.noise01)*0.3
@@ -55,12 +57,26 @@ class Feu:
         self.total = self.hp02*0.6
         
         return self.total
+        
+    def out(self, chnl=0):
+        """Pour envoyer le signal audio vers un haut-parleur"""
+        output = self.crackling + self.hissing01 + self.lapping01
+        return output
+        '''if chnl == 0:
+            self.bandPass.out()
+        elif chnl == 1:
+            self.bandPass.out(1)
+        return self'''
+
+        
+
 
 #fire-all
-feu01 = ButBP(Feu(), freq=600, q=0.2) 
-feu02 = ButBP(Feu(), freq=1200, q=0.6) 
-feu03 = ButBP(Feu(), freq=2600, q=0.4) 
-feu04 = Atone(Feu(), freq=1000)
+feuToFilter = Feu()
+feu01 = ButBP(feuToFilter.out(), freq=600, q=0.2, mul=0.5).mix(2).out() 
+feu02 = ButBP(feuToFilter.out(), freq=1200, q=0.6, mul=0.5).mix(2).out()
+feu03 = ButBP(feuToFilter.out(), freq=2600, q=0.4, mul=0.5).mix(2).out() 
+feu04 = Atone(feuToFilter.out(), freq=1000, mul=0.5).mix(2).out()
 
 
 

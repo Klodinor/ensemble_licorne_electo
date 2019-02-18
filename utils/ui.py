@@ -1,9 +1,9 @@
 import wx
 from pyo import *
 
-_server = Server().boot()
+#_server = Server().boot()
 
-sineTest = Sine(freq=440).mix(2).out()
+#sineTest = Sine(freq=440).mix(2).out()
 
 
 class mainFrame(wx.Frame):
@@ -190,11 +190,11 @@ class mainFrame(wx.Frame):
 
 
 
-if __name__ == '__main__':
+#if __name__ == '__main__':
     # When this module is run (not imported) then create the app, the
     # frame, show it, and start the event loop.
-    app = wx.App()
-    #app.Maximize(True)
-    frm = mainFrame(None, title='Ensemble Accéléromètre Électro')
-    frm.Show()
-    app.MainLoop()
+app = wx.App()
+#app.Maximize(True)
+frm = mainFrame(None, title='Ensemble Accéléromètre Électro')
+frm.Show()
+app.MainLoop()
