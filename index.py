@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# encoding: mbcs
+# encoding: latin-1
 
 from pyo import *
 import math
