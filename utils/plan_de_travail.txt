@@ -43,9 +43,10 @@ contrôleur MIDI.
 - Recherche sur la création de son de synthèse de correspondance "naturelle" et synthétique : Andy Farnell - Designing Sound
 
 - Communication entre protocole MIDI et Python/Pyo : Chapitre sur les contrôleurs externes dans les notes de cours de programmation musical 
-en langage python & https://docs.wxpython.org/
+en langage python & https://docs.wxpython.org/ 
 
-- Apprentissage de wxpython afin de créer l’interface graphique : https://docs.wxpython.org/ 
+- Apprentissage de wxpython afin de créer l’interface graphique : https://docs.wxpython.org/, https://extras.wxpython.org/wxPython4/extras/4.0.4/, 
+ainsi que les notes de cours portant sur ce sujet. 
 
 - Approfondir mes connaissances avec le langage Python et la librairie Pyo : Note de cours de programmation musical en langage Python & API 
 du langage lui-même https://docs.python.org/3/library/ 
@@ -88,22 +89,71 @@ graphique sera mise en relation avec le programme audio.
 
 ###################### Implémentation ######################
 
+- 21 Janvier 2019: Mise en place de la base de l'interface graphique en étudiant la documentation disponible sur l'api de wxPython et en faisant 
+la lecture des notes de cours des deux chapitres portant sur ce sujet.
+
+- 27 janvier 2019: reproduction de l'algorithme de 'vent dans les feuilles' d'Andy Farnell en pure data et tentative de reproduction de celui-ci 
+dans python avec pyo
+
+- 28 janvier 2019: 'vent dans les feuilles' fonctionnel en python et reproduction du script de pluie sur matière rigide d'Andy Farnell en 
+Pure Data.
+
+- 31 janvier 2019: travail sur la reproduction en python du script de la pluie.
+
+- 04 février 2019: testes sur la communication entre une plaquette Arduino et pyhton/pyo via le port série. Plus travail sur l'interface graphique.
+
+- 07 février 2019: Ajout & étude de la version améliorée du script de la pluie en python par Olivier Bélanger.
+
+- 11 février 2019: Avancement sur l'interface graphique (ajout de slider, définissions des sections et besoins)
+
+- 12 février 2019: Ménage dans le fichier de l'interface utilisateur (enlever lignes et commentaires superflus, etc.). Plus premier test 
+d'import du UI à l'intérieur du fichier principal index.py
+
+- 13 février 2019: Modification des fichiers 'feuilles' et 'pluie' afin d'en faire des class. Première tentative de reproduction en python du 
+script de 'feu' d'Andy Farnell (l'ensemble des exemples d'Andy Farnell en pure data m'ont été donnée, je n'ai donc plus besoin de les reproduire 
+en PD dans un premier temps).
+
+- 18 février 2019: Travail sur l'import de l'interface graphique dans index.py. De plus, le script de 'feu' fonctionne désormais, mais il 
+reste du travail à faire pour que celui-ci soit convaincant.
+
+- 21 février 2019: Succès dans l'importation de l'interface graphique dans index.py. Reste à éclaircir quelques points pour qu'elle réagisse
+bien avec le restant du code. Ménage du projet et mise à jour du plan de travail en vue de l'évaluation de lundi.
 
 
 
 ###################### Test et maintenance ######################
 
+- Sonorité: Une fois que les scripts ont été mis en place, j'ai fait plusieurs tests afin de déterminer quels paramètres seraient propices à 
+être influencés par les données provenant de mon Arduino. J'ai par la suite fait des essais afin de rendre les timbres de mes instruments davantage 
+'naturels', donc plus réalistes. Je me penche actuellement sur la conceptualisation d'un son de synthèse riche et massif afin de venir agrémenter 
+mes sons d'allure naturelle. Cette étape est encore au point embryonnaire.    
+
+
+
+- Interface graphique: Plusieurs tests ont été faits, surtout sur papier, afin de déterminer l'emplacement des différents éléments sur l'interface 
+graphique. Suite à l'implémentation de la plupart des fonctionnalités pour le premier instrumentiste, j'ai ensuite concentré mes efforts sur 
+l'importation de l'interface à l'intérieur de mon fichier index.py. La prochaine étape sera de faire fonctionner toutes les fonctionnalistes de ce 
+premier instrument (choix du timbre, effet, volume et autre) et par la suite de recopier le code afin de mettre en place l'ensemble de l'interface. 
+Dans le futur, je regarderai le tout avec un de mes amis qui est designer graphique, pour que le produit final ait une allure professionnelle.
+
+
+
+- Communication avec Arduino: j'ai tout d'abord testé la communication via le port série, mais à cause d'un problème avec l'installation de 'pip' 
+sur mon ordinateur le processus a pris beaucoup plus de temps que prévu, cependant le tout semble désormais fonctionnel. Par la suite, après avoir 
+discuté avec Patrick, Martin et Olivier, j'ai décidé de mettre de côté la communication avec le port série et de faire mon projet en utilisant 
+de l'OSC. Ceci permettra entre autres à mes dispositifs d'être sans fil, ce qui est un net avantage. J'attends en ce moment l'arrivée des pièces 
+que j'ai commandées afin de construire mon premier dispositif et de commencer à faire mes tests.
+
+
+
+- Communication entre python/pyo et contrôleur MIDI: Outre la lecture des notes de cours et un test sommaire, je n'ai pas avancé beaucoup sur cet 
+aspect du projet. Pour le moment, je me concentre sur le bon fonctionnement de tous les éléments, une fois que tout fonctionnera bien, j'ajouterai 
+la possibilité de contrôler l'interface avec un contrôleur MIDI.
+
 
 
 ############# Commentaires ###############
 
-Excellent projet!
-
-En ce qui concerne wxPython, la ressource par excellence est une application demo qui illustre pratiquement toutes les classes disponibles, avec vue sur le code. Tu peux la télécharger à cette addresse:
-
-https://extras.wxpython.org/wxPython4/extras/4.0.4/
-
 Petit conseil, travaille avec peu de sonorités et d'effets pour commencer. Assures-toi que la communication fonctionne et que le système fait tout ce dont tu as besoin. Après, il sera facile de compléter la liste des sources et des effets.
 
-10/10
 
