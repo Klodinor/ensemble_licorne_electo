@@ -1,3 +1,4 @@
+# encoding: latin-1
 import wx
 from pyo import *
 
@@ -5,15 +6,17 @@ from pyo import *
 
 #sineTest = Sine(freq=440).mix(2).out()
 
+#print('inFIle')
 
-class mainFrame(wx.Frame):
+class MainFrame(wx.Frame):
     """
     Interface utilisateur principal
     """
-
+    
     def __init__(self, *args, **kw):
+        #print('inClass')
         # ensure the parent's __init__ is called
-        super(mainFrame, self).__init__(*args, **kw)
+        super(MainFrame, self).__init__(*args, **kw)
         
         #Met l'interface en full screen
         self.Maximize()
@@ -174,7 +177,7 @@ class mainFrame(wx.Frame):
         x = evt.GetInt() / 100
         #self.volInst01.SetLabel("Volume : %.3f" % x)
         sineTest.mul = x
-        print(x)
+        #print(x)
         
     def changeInst(self, evt):
         x = evt.GetInt()
@@ -189,12 +192,15 @@ class mainFrame(wx.Frame):
             print('Synth')
 
 
-
-#if __name__ == '__main__':
+if __name__ == '__main__':
     # When this module is run (not imported) then create the app, the
     # frame, show it, and start the event loop.
-app = wx.App()
-#app.Maximize(True)
-frm = mainFrame(None, title='Ensemble Accéléromètre Électro')
-frm.Show()
-app.MainLoop()
+    app = wx.App()
+    #app.Maximize(True)
+    frm = MainFrame(None, title='Ensemble Accéléromètre Électro')
+    frm.Show()
+    app.MainLoop()
+else: 
+    #Si mon ui est ouvert depuis un fichier externe
+    frm = MainFrame(None, title='Ensemble Accéléromètre Électro')
+    frm.Show()
