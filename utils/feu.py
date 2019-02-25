@@ -9,8 +9,7 @@ class Feu:
     """Feu"""
     def __init__(self):
         self.noise01 = Noise()
-        #faire methode .out() ou je fais la somme des trois methode ci-bas et la ca va marcher.
-        #modifier aussi ces valeurs avec donnees capteur?
+        
         self.crackling = self.crackling(self.noise01)*0.2
         self.hissing01 = self.hissing(self.noise01)*0.3
         self.lapping01 = self.lapping(self.noise01)*0.6

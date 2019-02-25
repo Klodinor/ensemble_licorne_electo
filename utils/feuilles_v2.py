@@ -31,7 +31,7 @@ class VentFeuilles:
         self.lowPass02 = Tone(self.hp01, freq=4000, mul=1, add=0)
 
         self.lpCombined = ((self.lowPass02 * self.lowPass01)*1.2).mix(2)
-        self.lpCombined.out()
+        #self.lpCombined.out() -- remplacer par def out()
         
     def gust(self, x):
         """gust function"""
@@ -66,9 +66,14 @@ class VentFeuilles:
         self.result = self.input_02 * self.hpSquall
         return self.result
         
+    def out(self, chnl=0):
+        output = self.lpCombined.out()
+        return output
+        
+        
 
 #ventTest = VentFeuilles()
-
+#ventTest.out()
 
 
 #_server.gui(locals())

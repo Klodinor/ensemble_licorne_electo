@@ -26,7 +26,7 @@ class PluieMateriaux:
         self.totalToFilter = self.maxTotal
 
         self.hp01 = Atone(self.totalToFilter, freq=500)
-        self.hp02 = Atone(self.hp01, freq=500).out()
+        self.hp02 = Atone(self.hp01, freq=500)#.out()
         
     def gaussianNoise(self, amount=0.4):
         self.noiseGaus01 = Noise()
@@ -40,9 +40,14 @@ class PluieMateriaux:
         self.noiseGaus02 = Cos(Noise(mul=2*math.pi)) # L'objet cos~ de puredata effectue la multiplication par 2pi à l'interne. 
         self.output = self.squareRoot*self.noiseGaus02 # self.output est ton gaussian noise.
         return self.output
+        
+    def out(self):
+        output = self.hp02.out()
+        return output
+
 
 
 #pluieMatTest = PluieMateriaux()
-
+#pluieMatTest.out()
 
 #_server.gui(locals())
