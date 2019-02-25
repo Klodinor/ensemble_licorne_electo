@@ -1,8 +1,9 @@
+# encoding: latin-1
 from pyo import *
 import random
 
-_server = Server(sr=44100, nchnls=2, buffersize=512, duplex=1).boot()
-_server.amp = 0.1
+#_server = Server(sr=44100, nchnls=2, buffersize=512, duplex=1).boot()
+#_server.amp = 0.1
 
 class Feu:
     """Feu"""
@@ -72,13 +73,13 @@ class Feu:
 
 
 #fire-all
-feuToFilter = Feu()
-feu01 = ButBP(feuToFilter.out(), freq=600, q=0.2, mul=0.5).mix(2).out() 
-feu02 = ButBP(feuToFilter.out(), freq=1200, q=0.6, mul=0.5).mix(2).out()
-feu03 = ButBP(feuToFilter.out(), freq=2600, q=0.4, mul=0.5).mix(2).out() 
-feu04 = Atone(feuToFilter.out(), freq=1000, mul=0.5).mix(2).out()
+#feuToFilter = Feu()
+#feu01 = ButBP(feuToFilter.out(), freq=600, q=0.2, mul=0.5).mix(2).out() 
+#feu02 = ButBP(feuToFilter.out(), freq=1200, q=0.6, mul=0.5).mix(2).out()
+#feu03 = ButBP(feuToFilter.out(), freq=2600, q=0.4, mul=0.5).mix(2).out() 
+#feu04 = Atone(feuToFilter.out(), freq=1000, mul=0.5).mix(2).out()
 
 
 
 
-_server.gui(locals())
+#_server.gui(locals())

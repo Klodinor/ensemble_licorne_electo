@@ -1,5 +1,6 @@
-#from pyo import *
-#import math # pour PI
+# encoding: latin-1
+from pyo import *
+import math # pour PI
 
 #_server = Server(sr=44100, nchnls=2, buffersize=512, duplex=1).boot()
 

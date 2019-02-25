@@ -1,22 +1,17 @@
 # encoding: latin-1
 import wx
 from pyo import *
+from utils.audio import Audio
 
-#_server = Server().boot()
-
-#sineTest = Sine(freq=440).mix(2).out()
-
-#print('inFIle')
 
 class MainFrame(wx.Frame):
     """
     Interface utilisateur principal
     """
     
-    def __init__(self, *args, **kw):
-        #print('inClass')
+    def __init__(self, audio=None, title=''):
         # ensure the parent's __init__ is called
-        super(MainFrame, self).__init__(*args, **kw)
+        super(MainFrame, self).__init__(None, title=title)
         
         #Met l'interface en full screen
         self.Maximize()
@@ -25,6 +20,8 @@ class MainFrame(wx.Frame):
         self.pnl = wx.Panel(self)
         self.pnl.SetBackgroundColour("#777777")#set la couleur du panel
 
+        #On creer la var qui represente l'audio - BUG
+        self.audio = audio
 
         # and put some text with a larger bold font on it --> st = string, gere ce qui a trait au texte lui meme & font, tout ce qui a trait a la police de caractere 
         self.st = wx.StaticText(self.pnl, label="Ensemble Accéléromètre Électro", pos=(5,5))
@@ -168,15 +165,13 @@ class MainFrame(wx.Frame):
                       wx.OK|wx.ICON_INFORMATION)
     #Gestion activation de l'audio
     def handleAudio(self, evt):
-        if evt.GetInt() == 1:
-            _server.start()
-        else:
-            _server.stop()
+        self.audio.startServer(evt.GetInt())
             
     def changeVolume(self, evt):
         x = evt.GetInt() / 100
         #self.volInst01.SetLabel("Volume : %.3f" % x)
-        sineTest.mul = x
+        self.audio.setSineVolume(x)
+        #sineTest.mul = x
         #print(x)
         
     def changeInst(self, evt):
@@ -191,16 +186,18 @@ class MainFrame(wx.Frame):
         else:
             print('Synth')
 
+#POUR GERER mes 10 voix, passer une liste [Audio(), Audio(), etc] et les apellers avec audio[x] dans MainFrame()
+_audio = Audio()
 
 if __name__ == '__main__':
-    # When this module is run (not imported) then create the app, the
-    # frame, show it, and start the event loop.
+    # Quand le module n'est pas importé
+    # create the app, the frame, show it, and start the event loop.
     app = wx.App()
     #app.Maximize(True)
-    frm = MainFrame(None, title='Ensemble Accéléromètre Électro')
+    frm = MainFrame(title='Ensemble Accéléromètre Électro', audio=_audio)
     frm.Show()
     app.MainLoop()
 else: 
     #Si mon ui est ouvert depuis un fichier externe
-    frm = MainFrame(None, title='Ensemble Accéléromètre Électro')
+    frm = MainFrame(title='Ensemble Accéléromètre Électro', audio=_audio)
     frm.Show()
