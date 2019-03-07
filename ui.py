@@ -75,14 +75,14 @@ class MainFrame(wx.Frame):
         #Label Slider volume instrument 01
         self.volInst01 = wx.StaticText(self.pnl, id=-1, label="Inst_01 Volume", pos=(610, 60), size=wx.DefaultSize)
         #Slider volume instrument 01
-        self.volInst01 = wx.Slider(self.pnl, style=wx.SL_VERTICAL|wx.SL_INVERSE|wx.SL_LABELS, id=1, value=0, minValue=0, maxValue=100, pos=(605, 82), size=(-1, 250))#Ou 0 = 0 & 100 = 1
+        self.volInst01 = wx.Slider(self.pnl, style=wx.SL_VERTICAL|wx.SL_INVERSE|wx.SL_LABELS, id=1, value=100, minValue=0, maxValue=100, pos=(605, 82), size=(-1, 250))#Ou 0 = 0 & 100 = 1
         #fonction de callBack a defenir
         self.volInst01.Bind(wx.EVT_SLIDER, self.changeVolume)
         ''' FIN Init des slider, btn & dropdown de mon interface -- provient des notes d'Olivier Belanger'''
 
         # and a status bar -- un footer 
-        self.CreateStatusBar()
-        self.SetStatusText("Main User interface")
+        #self.CreateStatusBar()
+        #self.SetStatusText("Main User interface")
 
 
     def makeMenuBar(self):
