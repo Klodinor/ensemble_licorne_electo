@@ -63,7 +63,7 @@ class MainFrame(wx.Frame):
         
 
         
-        instType = ['Vent Feuilles', 'Pluie', 'Vent', 'Synth']
+        instType = ['Vent Feuilles', 'Pluie', 'Feu', 'Synth Bass']
         self.popupText_ints01 = wx.StaticText(self.pnl, id=-1, 
                                        label="Choisir un instrument",
                                        pos=(610, 10), size=wx.DefaultSize)
@@ -177,14 +177,7 @@ class MainFrame(wx.Frame):
     def changeInst(self, evt):
         x = evt.GetInt()
         #Activer une classe de l'instrument en question
-        if x==0:
-            print('Vent Feuilles')
-        elif x==1:
-            print('Pluie')
-        elif x==2:
-            print('Vent')
-        else:
-            print('Synth')
+        self.audio.setInstrument(x)
 
 #POUR GERER mes 10 voix, passer une liste [Audio(), Audio(), etc] et les apellers avec audio[x] dans MainFrame()
 _audio = Audio()
