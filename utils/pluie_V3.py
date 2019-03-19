@@ -41,6 +41,10 @@ class PluieMateriaux:
         self.output = self.squareRoot*self.noiseGaus02 # self.output est ton gaussian noise.
         return self.output
         
+    def volume(self, x):
+        self.hp02.mul = x
+
+
     def out(self):
         output = self.hp02.out()
         return output

@@ -65,7 +65,13 @@ class VentFeuilles:
         
         self.result = self.input_02 * self.hpSquall
         return self.result
-        
+    
+    def volume(self, vol):
+        self.lpCombined.mul = vol
+        #OU FAIRE SUR 
+        #self.hp01.mul
+        #self.lowPass02.mul
+
     def out(self, chnl=0):
         output = self.lpCombined.out()
         return output

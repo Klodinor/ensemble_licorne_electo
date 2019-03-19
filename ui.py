@@ -170,7 +170,7 @@ class MainFrame(wx.Frame):
     def changeVolume(self, evt):
         x = evt.GetInt() / 100
         #self.volInst01.SetLabel("Volume : %.3f" % x)
-        self.audio.setSineVolume(x)
+        self.audio.setVolume(x)
         #sineTest.mul = x
         #print(x)
         
