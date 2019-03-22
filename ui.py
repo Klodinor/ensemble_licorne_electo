@@ -8,7 +8,6 @@ class MainFrame(wx.Frame):
     """
     Interface utilisateur principal
     """
-    
     def __init__(self, audio=None, title=''):
         # ensure the parent's __init__ is called
         super(MainFrame, self).__init__(None, title=title)

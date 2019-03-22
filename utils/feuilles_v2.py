@@ -71,10 +71,17 @@ class VentFeuilles:
         #OU FAIRE SUR 
         #self.hp01.mul
         #self.lowPass02.mul
+        
+    def isOut(self):
+        if self.lpCombined.isOutputting() == True:
+            return True
 
     def out(self, chnl=0):
         output = self.lpCombined.out()
         return output
+        
+    def stop(self):
+        self.lpCombined.stop()
         
         
 

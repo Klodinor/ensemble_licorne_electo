@@ -44,10 +44,16 @@ class PluieMateriaux:
     def volume(self, x):
         self.hp02.mul = x
 
+    def isOut(self):
+        if self.hp02.isOutputting() == True:
+            return True
 
     def out(self):
         output = self.hp02.out()
         return output
+        
+    def stop(self):
+        self.hp02.stop()
 
 
 
