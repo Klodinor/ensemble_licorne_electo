@@ -49,6 +49,8 @@ class MainFrame(wx.Frame):
                                        pos=(10, 80), size=wx.DefaultSize)
         self.onOff_effet01 = wx.ToggleButton(self.pnl, id=-1, label="On/Off", 
                                      pos=(8, 100), size=wx.DefaultSize)
+        # Un event du toggle appelle la methode self.handleAudio
+        self.onOff_effet01.Bind(wx.EVT_TOGGLEBUTTON, self.gestionEffets)
 
         # Liste de son contenus dans le meme dossier que le script
         effets = ['Delai', 'Disto', 'Reverb', 'Harmonizer']
@@ -74,7 +76,7 @@ class MainFrame(wx.Frame):
         #Label Slider volume instrument 01
         self.volInst01 = wx.StaticText(self.pnl, id=-1, label="Inst_01 Volume", pos=(610, 60), size=wx.DefaultSize)
         #Slider volume instrument 01
-        self.volInst01 = wx.Slider(self.pnl, style=wx.SL_VERTICAL|wx.SL_INVERSE|wx.SL_LABELS, id=1, value=100, minValue=0, maxValue=100, pos=(605, 82), size=(-1, 250))#Ou 0 = 0 & 100 = 1
+        self.volInst01 = wx.Slider(self.pnl, style=wx.SL_VERTICAL|wx.SL_INVERSE|wx.SL_LABELS, id=1, value=0, minValue=-60, maxValue=18, pos=(605, 82), size=(-1, 250))#Ou 0 = 0 & 100 = 1
         #fonction de callBack a defenir
         self.volInst01.Bind(wx.EVT_SLIDER, self.changeVolume)
         ''' FIN Init des slider, btn & dropdown de mon interface -- provient des notes d'Olivier Belanger'''
@@ -165,9 +167,19 @@ class MainFrame(wx.Frame):
     #Gestion activation de l'audio
     def handleAudio(self, evt):
         self.audio.startServer(evt.GetInt())
-            
+    
+    def gestionEffets(self, evt):
+        if evt.GetInt() == 1:
+            #appeller class effet avec 1 en argument pour mute les intruments et faire sortir par la var dry & output
+            print('effet on')
+        else: 
+            #appeller class effet avec 0 en argument pour que le son ressorte par la var dry
+            print('effet off')
+        
     def changeVolume(self, evt):
-        x = evt.GetInt() / 100
+        #x = evt.GetInt() / 100
+        #formuleConvertionDb
+        x = 10**(evt.GetInt()/20)
         #self.volInst01.SetLabel("Volume : %.3f" % x)
         self.audio.setVolume(x)
         #sineTest.mul = x

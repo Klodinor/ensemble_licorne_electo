@@ -51,22 +51,21 @@ class Audio:
         #FAIRE VARIABLE GLOBALE QUI STORE LA VALEUR COURANTE DU SLIDER, pour initialiser les nouveaux instruments (changement d'isnt) au même volume
         self.volumeCourant = vol
         print(vol)
-        if self.ventTest.isOut() == True:
-            #feuilles
-            self.ventTest.volume(vol)
-        elif self.pluieMatTest.isOut()== True:
-            #pluie
-            self.pluieMatTest.volume(vol*2)
-        elif self.feu01.isOutputting() == True:
-            #feu
-            self.feu01.mul = vol/2
-            self.feu02.mul = vol/2
-            self.feu03.mul = vol/2
-            self.feu04.mul = vol/2
-        '''elif self.fatbass.isOutputting() == True:
-            self.fatbass.mul = vol/2
-        else:
-            pass'''
+        #if self.ventTest.isOut() == True:
+        #feuilles
+        self.ventTest.volume(vol)
+        #elif self.pluieMatTest.isOut()== True:
+        #pluie
+        self.pluieMatTest.volume(vol*20)
+        #elif self.feu01.isOutputting() == True:
+        #feu
+        self.feu01.mul = vol/20
+        self.feu02.mul = vol/20
+        self.feu03.mul = vol/20
+        self.feu04.mul = vol/20
+        #FatBass
+        self.fatbass.mul = vol/2
+        
 
         
     def setInstrument(self, x):
@@ -142,6 +141,20 @@ class Audio:
             self.feu04.stop()
             #Stop pluie
             self.pluieMatTest.out()
+
+
+ 
+'''
+LOGIQUE Pour l'utlilisation des effets  :
+
+le son qui est ouput par mon set instrument et stock dans la var dry (qui est un input fader)
+
+quand j'active le on/off du bouton, ce n'est plus mon instruments qui envoi du son mais la var outpu ce dessous, où voice = interpolation entre tout mes effets et le dry wet 
+
+''' 
+#dry = InputFader(input)#setInput feu, vent ou autre
+#output = Selector([dry, disto, reverb, delai], voice=0.00, mul=1, add=0)#voice fonctionne +1 par agument pour la valeur totale de voice
+
 
 #audio = Audio()
 
