@@ -46,20 +46,20 @@ class MainFrame(wx.Frame):
         '''Init des slider, btn & dropdown de mon interface -- provient des notes d'Olivier Belanger'''
         ############# Initialise la premiere barre d'effet pour l'instrumentiste 01#############
         self.onOffText_effet01 = wx.StaticText(self.pnl, id=-1, label="Inst_01 effets", 
-                                       pos=(10, 80), size=wx.DefaultSize)
+                                       pos=(610, 60), size=wx.DefaultSize)
         self.onOff_effet01 = wx.ToggleButton(self.pnl, id=-1, label="On/Off", 
-                                     pos=(8, 100), size=wx.DefaultSize)
+                                     pos=(608, 80), size=wx.DefaultSize)
         # Un event du toggle appelle la methode self.handleAudio
         self.onOff_effet01.Bind(wx.EVT_TOGGLEBUTTON, self.gestionEffets)
 
         # Liste de son contenus dans le meme dossier que le script
-        effets = ['Delai', 'Disto', 'Reverb', 'Harmonizer']
+        '''effets = ['Delai', 'Disto', 'Reverb', 'Harmonizer']
         self.popupText = wx.StaticText(self.pnl, id=-1, 
                                        label="Choisir un effet",
                                        pos=(10, 130), size=wx.DefaultSize)
         self.popup = wx.Choice(self.pnl, id=-1, pos=(8, 145), 
                                size=(150, -1), choices=effets)
-        self.popup.SetSelection(0)
+        self.popup.SetSelection(0)'''
         ############# FIN initialise la premiere barre d'effet pour l'instrumentiste 01#############    
         
 
@@ -74,9 +74,9 @@ class MainFrame(wx.Frame):
         self.popup_ints01.Bind(wx.EVT_CHOICE, self.changeInst)
         
         #Label Slider volume instrument 01
-        self.volInst01 = wx.StaticText(self.pnl, id=-1, label="Inst_01 Volume", pos=(610, 60), size=wx.DefaultSize)
+        self.volInst01 = wx.StaticText(self.pnl, id=-1, label="Inst_01 Volume", pos=(610, 115), size=wx.DefaultSize)
         #Slider volume instrument 01
-        self.volInst01 = wx.Slider(self.pnl, style=wx.SL_VERTICAL|wx.SL_INVERSE|wx.SL_LABELS, id=1, value=0, minValue=-60, maxValue=18, pos=(605, 82), size=(-1, 250))#Ou 0 = 0 & 100 = 1
+        self.volInst01 = wx.Slider(self.pnl, style=wx.SL_VERTICAL|wx.SL_INVERSE|wx.SL_LABELS, id=1, value=0, minValue=-60, maxValue=18, pos=(605, 127), size=(-1, 250))#Ou 0 = 0 & 100 = 1
         #fonction de callBack a defenir
         self.volInst01.Bind(wx.EVT_SLIDER, self.changeVolume)
         ''' FIN Init des slider, btn & dropdown de mon interface -- provient des notes d'Olivier Belanger'''

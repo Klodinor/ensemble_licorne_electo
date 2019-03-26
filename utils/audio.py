@@ -14,6 +14,9 @@ class Audio:
         self._server = Server().boot()
         #self._server.amp = 0.1
 
+        #Quand je recois de l'osc j'execute la fonction pp
+        #self.OSCReceive = OscDataReceive(9900, "/imu", self.dataReceive)
+
         self.volumeCourant = 0
 
         #self.freqPort = SigTo(value=440, time=0.05, init=250)
@@ -37,6 +40,10 @@ class Audio:
         self.duty = Sine([0.07, .1]).range(0.1, 0.5)
         self.fatbass = FatBass(80, self.octave, self.duty, 2500, 0, mul=0.4)#.out()
         #self.fatbass.ctrl()
+
+    def dataReceive(address, *args):
+        #print(address)
+        print(args)
 
     def startServer(self, state):
         if state:
