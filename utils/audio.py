@@ -15,7 +15,7 @@ class Audio:
         #self._server.amp = 0.1
 
         #Quand je recois de l'osc j'execute la fonction pp
-        #self.OSCReceive = OscDataReceive(9900, "/imu", self.dataReceive)
+        self.OSCReceive = OscDataReceive(9900, "/imu", self.dataReceive)
 
         self.volumeCourant = 0
 
