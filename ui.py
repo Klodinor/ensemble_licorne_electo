@@ -169,12 +169,7 @@ class MainFrame(wx.Frame):
         self.audio.startServer(evt.GetInt())
     
     def gestionEffets(self, evt):
-        if evt.GetInt() == 1:
-            #appeller class effet avec 1 en argument pour mute les intruments et faire sortir par la var dry & output
-            print('effet on')
-        else: 
-            #appeller class effet avec 0 en argument pour que le son ressorte par la var dry
-            print('effet off')
+        self.audio.effets(evt.GetInt())
         
     def changeVolume(self, evt):
         #x = evt.GetInt() / 100
