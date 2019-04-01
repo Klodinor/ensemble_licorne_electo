@@ -58,6 +58,7 @@ class Audio:
         self.outputEffetsVoice = Sig(0)
         self.outputEffets = Selector([self.dry, self.disto01, self.reverb01, self.delai01], voice=self.outputEffetsVoice, mul=1, add=0)
         '''FIN Bloc Initialisation Effets'''
+        
     def dataReceive(self, address, *args):
         #print(address)
         #print(args)
@@ -71,7 +72,7 @@ class Audio:
         #JE DOIS ENVOYER dans outputEffetsVoice --> self.yawAxisInDeg mapper entre 0 & 1
         #self.outputEffetsVoice.value = self.yawAxisInDeg
         #print(self.outputEffetsVoice.value)
-        if self.yawAxisInDeg <= 45:
+        '''if self.yawAxisInDeg <= 45:
             self.outputEffetsVoice.value = 0
             print(45)
         elif self.yawAxisInDeg <= 90:
@@ -82,7 +83,12 @@ class Audio:
             print(135)
         elif self.yawAxisInDeg <= 180:
             self.outputEffetsVoice.value = 3
-            print(180)
+            print(180)'''
+            
+        #Remplacer outmin et outmax par la valeur total de 'voice' de mon selector. Donc le .lenght() de mon array avec les effets.
+        #faire en sorte que si les donnees sont dans le negatif, de le mettre en positif.
+        scaleSig = Scale(Sig(self.yawAxisInDeg), inmin=-180, inmax=180, outmin=-1, outmax=1, exp=1, mul=1, add=0)#recoit des obj audio
+        scale = rescale(*args, **kwargs)#donnees uniquement    
 
 
     def startServer(self, state):
