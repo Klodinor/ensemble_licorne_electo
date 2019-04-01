@@ -77,29 +77,18 @@ class Audio:
         self.rollAxisInDeg = math.degrees(args[2])
 
         #Action sur l'audio
-        #JE DOIS ENVOYER dans outputEffetsVoice --> self.yawAxisInDeg mapper entre 0 & 1
+        
         #self.outputEffetsVoice.value = self.yawAxisInDeg
         #print(self.outputEffetsVoice.value)
-        '''if self.yawAxisInDeg <= 45:
-            self.outputEffetsVoice.value = 0
-            print(45)
-        elif self.yawAxisInDeg <= 90:
-            self.outputEffetsVoice.value = 1
-            print(90)
-        elif self.yawAxisInDeg <= 135:
-            self.outputEffetsVoice.value = 2
-            print(135)
-        elif self.yawAxisInDeg <= 180:
-            self.outputEffetsVoice.value = 3
-            print(180)'''
-            
+    
         #Remplacer outmin et outmax par la valeur total de 'voice' de mon selector. Donc le len(liste)-1 de mon array avec les effets.
         #faire en sorte que si les donnees sont dans le negatif, de le mettre en positif.
         
         #print(self.yawAxisInDeg)
         #self.clipedYaw = Clip(self.yawAxisInDeg, min=-90.00, max=90.00)
+        
         #scaleSig = Scale(Sig(self.yawAxisInDeg), inmin=-180, inmax=180, outmin=-1, outmax=1, exp=1, mul=1, add=0)#recoit des obj audio
-        self.scale = rescale(self.yawAxisInDeg, xmin=-180, xmax=180, ymin=0, ymax=4)#donnees uniquement    
+        self.scale = rescale(self.yawAxisInDeg, xmin=-180, xmax=180, ymin=0, ymax=5)#donnees uniquement    
         #print(self.scale)
         self.outputEffetsVoice.value = self.scale
         
