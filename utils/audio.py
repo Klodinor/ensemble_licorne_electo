@@ -224,19 +224,6 @@ class Audio:
             self.outputEffets.stop()
             
 
-
- 
-'''
-LOGIQUE Pour l'utlilisation des effets  :
-
-le son qui est ouput par mon set instrument et stock dans la var dry (qui est un input fader)
-
-quand j'active le on/off du bouton, ce n'est plus mon instruments qui envoi du son mais la var outpu ce dessous, où voice = interpolation entre tout mes effets et le dry wet 
-
-''' 
-#dry = InputFader(input)#setInput feu, vent ou autre
-#output = Selector([dry, disto, reverb, delai], voice=0.00, mul=1, add=0)#voice fonctionne +1 par agument pour la valeur totale de voice
-
 if __name__ == '__main__':
     _server = Server(sr=44100, nchnls=2, buffersize=512, duplex=1).boot()
     audio = Audio()
