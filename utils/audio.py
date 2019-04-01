@@ -38,6 +38,8 @@ class Audio:
         self.feu02 = ButBP(self.feuToFilter.out(), freq=1200, q=0.6, mul=0.5)
         self.feu03 = ButBP(self.feuToFilter.out(), freq=2600, q=0.4, mul=0.5)
         self.feu04 = Atone(self.feuToFilter.out(), freq=1000, mul=0.5).mix(2)
+        #fireAll
+        self.fireAll = self.feu01 + self.feu02 + self.feu03 + self.feu04 
 
         #FatBass
         self.octave = Sine([0.15,0.13]).range(0.1, 0.9)
@@ -47,16 +49,21 @@ class Audio:
         '''FIN Bloc Initialisation Instruments'''
 
         '''Bloc Initialisation Effets'''
+        #Ajouter ces effets dans le array dans la methode ou les effets sont gerer -- a automatiser avec un for au travers de mon arraw 
         #Disto
         self.disto01 = Disto(self.dry, drive=0.85, slope=0.35, mul=1)
         #Reverb Stereo
         self.reverb01 = STRev(self.dry, inpos=0.5, revtime=23.5, cutoff=3550, bal=0.5, roomSize=4, firstRefGain=-3, mul=1)
         #delai Stereo
         self.delai01 = Delay(self.dry, delay=3, feedback=0.5, maxdelay=15, mul=1)
+        #harmonizer
+        self.harmo01 = Harmonizer(self.dry, transpo=-21.00, feedback=0, winsize=0.10, mul=1, add=0)
+        #chorus
+        self.chorus01 = Chorus(self.dry, depth=4, feedback=0.5, bal=0.50)   
         
         #C'est dans cette var que les effets et le dry son entreposes
         self.outputEffetsVoice = Sig(0)
-        self.outputEffets = Selector([self.dry, self.disto01, self.reverb01, self.delai01], voice=self.outputEffetsVoice, mul=1, add=0)
+        self.outputEffets = Selector([self.dry, self.disto01, self.reverb01, self.delai01, self.harmo01, self.chorus01], voice=self.outputEffetsVoice, mul=1, add=0)
         '''FIN Bloc Initialisation Effets'''
         
     def dataReceive(self, address, *args):
@@ -64,10 +71,11 @@ class Audio:
         #print(args)
         
         #Convertion des donnees recu en radian en degree
+        #Clip mes donnees entre -90 et 90 pour que ca soit plus efficace
         self.yawAxisInDeg = math.degrees(args[0])
         self.pitchAxisInDeg = math.degrees(args[1])
         self.rollAxisInDeg = math.degrees(args[2])
-        
+
         #Action sur l'audio
         #JE DOIS ENVOYER dans outputEffetsVoice --> self.yawAxisInDeg mapper entre 0 & 1
         #self.outputEffetsVoice.value = self.yawAxisInDeg
@@ -85,11 +93,16 @@ class Audio:
             self.outputEffetsVoice.value = 3
             print(180)'''
             
-        #Remplacer outmin et outmax par la valeur total de 'voice' de mon selector. Donc le .lenght() de mon array avec les effets.
+        #Remplacer outmin et outmax par la valeur total de 'voice' de mon selector. Donc le len(liste)-1 de mon array avec les effets.
         #faire en sorte que si les donnees sont dans le negatif, de le mettre en positif.
-        scaleSig = Scale(Sig(self.yawAxisInDeg), inmin=-180, inmax=180, outmin=-1, outmax=1, exp=1, mul=1, add=0)#recoit des obj audio
-        scale = rescale(*args, **kwargs)#donnees uniquement    
-
+        
+        #print(self.yawAxisInDeg)
+        #self.clipedYaw = Clip(self.yawAxisInDeg, min=-90.00, max=90.00)
+        #scaleSig = Scale(Sig(self.yawAxisInDeg), inmin=-180, inmax=180, outmin=-1, outmax=1, exp=1, mul=1, add=0)#recoit des obj audio
+        self.scale = rescale(self.yawAxisInDeg, xmin=-180, xmax=180, ymin=0, ymax=4)#donnees uniquement    
+        #print(self.scale)
+        self.outputEffetsVoice.value = self.scale
+        
 
     def startServer(self, state):
         if state:
@@ -140,15 +153,12 @@ class Audio:
             self.closeInst('feu')
             #Feu
             #fire-all
-            self.feu01.out()#.mix(2).out() 
-            self.feu02.out(1)#.mix(2).out()
-            self.feu03.out()#.mix(2).out() 
-            self.feu04.out(1)#.mix(2).out(1)
-            #mettre au volume actuel du slider
-            #self.feu01.mul = volumeCourant
-            #self.feu02.mul = vvolumeCourant
-            #self.feu03.mul = volumeCourant
-            #self.feu04.mul = volumeCourant
+            #self.feu01.out()#.mix(2).out() 
+            #self.feu02.out(1)#.mix(2).out()
+            #self.feu03.out()#.mix(2).out() 
+            #self.feu04.out(1)#.mix(2).out(1)
+            self.dry= self.fireAll
+            self.dry.out()
         elif x==3:
             #Aller chercher l'instrument Fat Bass du prof et modifier
             self.closeInst('fatbass')
@@ -162,10 +172,7 @@ class Audio:
             #Stop pluie
             self.pluieMatTest.stop()
             #stop Feu
-            self.feu01.stop()
-            self.feu02.stop()
-            self.feu03.stop()
-            self.feu04.stop()
+            self.fireAll.stop()
             #stop bass
             self.fatbass.stop()
             
@@ -173,10 +180,7 @@ class Audio:
             #Stop feuilles
             self.ventTest.stop()
             #stop Feu
-            self.feu01.stop()
-            self.feu02.stop()
-            self.feu03.stop()
-            self.feu04.stop()
+            self.fireAll.stop()
             #stop bass
             self.fatbass.stop()
             
@@ -192,10 +196,7 @@ class Audio:
             #Stop feuilles
             self.ventTest.stop()
             #stop Feu
-            self.feu01.stop()
-            self.feu02.stop()
-            self.feu03.stop()
-            self.feu04.stop()
+            self.fireAll.stop()
             #Stop pluie
             self.pluieMatTest.stop()
         
@@ -203,10 +204,7 @@ class Audio:
             #Stop feuilles
             self.ventTest.stop()
             #stop Feu
-            self.feu01.stop()
-            self.feu02.stop()
-            self.feu03.stop()
-            self.feu04.stop()
+            self.fireAll.stop()
             #Stop pluie
             self.pluieMatTest.stop()
             #stop bass
@@ -217,10 +215,9 @@ class Audio:
         if isOn == 1:
             print('on')
             self.closeInst('all')
-            self.disto01.input = self.reverb01.input = self.delai01.input = self.dry.out()
-            self.outputEffets.input = [self.dry, self.disto01, self.reverb01, self.delai01]
+            self.disto01.input = self.reverb01.input = self.delai01.input = self.chorus01.input = self.harmo01.input = self.dry.out()
+            #self.outputEffets.input = [self.dry, self.disto01, self.reverb01, self.delai01]
             self.outputEffets.out()
-            self.outputEffets.voice = 1
         else:
             print('off')
             self.dry.out()
