@@ -7,8 +7,12 @@ from pyo import *
 class VentFeuilles:
     """Vent dans feuilles class intruments"""
     def __init__(self):
-        self.osc01 = Sine(freq=0.1, phase=0, mul=1, add=0)
-        self.osc02 = (self.osc01 + 1)*0.25
+        
+        self.osc01Facteur = Sig(0)
+        self.osc02Facteur = Sig(0)
+
+        self.osc01 = Sine(freq=0.1+self.osc01Facteur, phase=0, mul=1, add=0)
+        self.osc02 = (self.osc01 + 1)*(0.25+self.osc02Facteur)
 
         self.gustEtSquall = self.gust(self.osc02) + self.squall(self.osc02)
 
@@ -65,7 +69,14 @@ class VentFeuilles:
         
         self.result = self.input_02 * self.hpSquall
         return self.result
-    
+        
+    def windSpeedChange(self, which, valSig01, valSig02):
+        """Cette fonction affecte le son de l'instrument via un controleur externe"""
+        if which == 'sig01':
+            self.osc01Facteur.value = valSig01
+        elif which == 'sig02':
+            self.osc02Facteur.value = valSig02
+        
     def volume(self, vol):
         self.lpCombined.mul = vol
         #OU FAIRE SUR 

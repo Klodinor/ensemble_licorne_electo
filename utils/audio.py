@@ -30,6 +30,7 @@ class Audio:
         self.ventTest = VentFeuilles()
         
         #Pluie Mat
+        self.pluieMatAmoutn = Sig(0.4)
         self.pluieMatTest = PluieMateriaux()
         
         #Feu
@@ -40,11 +41,17 @@ class Audio:
         self.feu04 = Atone(self.feuToFilter.out(), freq=1000, mul=0.5).mix(2)
         #fireAll
         self.fireAll = self.feu01 + self.feu02 + self.feu03 + self.feu04 
+        #Filtre fireAll
+        self.filterFireCutoff = Sig(18000)
+        self.filterFireQ = Sig(4)
+        self.fireAllHP = ButBP(self.fireAll, freq=self.filterFireCutoff, q=self.filterFireQ)
 
+        #Var global son actuel dry
+        self.modifFondFatbass = Sig(1)
         #FatBass
         self.octave = Sine([0.15,0.13]).range(0.1, 0.9)
         self.duty = Sine([0.07, .1]).range(0.1, 0.5)
-        self.fatbass = FatBass(80, self.octave, self.duty, 2500, 0, mul=0.4)#.out()
+        self.fatbass = FatBass(80*self.modifFondFatbass, self.octave, self.duty, 2500, 0, mul=0.4)#.out()
         #self.fatbass.ctrl()
         '''FIN Bloc Initialisation Instruments'''
 
@@ -76,8 +83,7 @@ class Audio:
         self.pitchAxisInDeg = math.degrees(args[1])
         self.rollAxisInDeg = math.degrees(args[2])
 
-        #Action sur l'audio
-        
+        '''### Action sur l'audio ###'''
         #self.outputEffetsVoice.value = self.yawAxisInDeg
         #print(self.outputEffetsVoice.value)
     
@@ -86,11 +92,35 @@ class Audio:
         
         #print(self.yawAxisInDeg)
         #self.clipedYaw = Clip(self.yawAxisInDeg, min=-90.00, max=90.00)
-        
+        '''Gestion Selector Effets'''
         #scaleSig = Scale(Sig(self.yawAxisInDeg), inmin=-180, inmax=180, outmin=-1, outmax=1, exp=1, mul=1, add=0)#recoit des obj audio
         self.scale = rescale(self.yawAxisInDeg, xmin=-180, xmax=180, ymin=0, ymax=5)#donnees uniquement    
         #print(self.scale)
         self.outputEffetsVoice.value = self.scale
+        
+        '''Fatbass pitch'''
+        #fatbass pitch --> clip value entre -90 et 90, puis mettre en positif les valeurs negative
+        #-- faire avec abs(number)
+        #print(abs(self.pitchAxisInDeg))
+        self.modifFondFatbass.value = abs(self.pitchAxisInDeg) / 25#90
+        
+        '''Feu Filtre'''
+        self.scaleFiltreCut = rescale(self.pitchAxisInDeg, xmin=-90, xmax=90, ymin=60, ymax=12000)
+        self.scaleFiltreQ = rescale(abs(self.rollAxisInDeg), xmin=0, xmax=90, ymin=1, ymax=7)
+        #print(int(self.scaleFiltreQ))
+        self.filterFireCutoff.value = self.scaleFiltreCut
+        self.filterFireQ.value = self.scaleFiltreQ
+        
+        '''Pluie Amoutn'''
+        self.pluieMatAmoutn.value = rescale(abs(self.pitchAxisInDeg), xmin=00, xmax=90, ymin=0.3, ymax=0.99)
+        self.pluieMatTest.gaussianChange(self.pluieMatAmoutn.value)
+        
+        '''Vent vitesse'''
+        self.ventSig01 = rescale(abs(self.pitchAxisInDeg), xmin=0, xmax=90, ymin=0, ymax=1)
+        self.ventSig02 = rescale(abs(self.rollAxisInDeg), xmin=0, xmax=90, ymin=0, ymax=1)
+        
+        self.ventTest.windSpeedChange('sig01', self.ventSig01, 0)
+        self.ventTest.windSpeedChange('sig02', 0, self.ventSig02)
         
 
     def startServer(self, state):
@@ -146,7 +176,7 @@ class Audio:
             #self.feu02.out(1)#.mix(2).out()
             #self.feu03.out()#.mix(2).out() 
             #self.feu04.out(1)#.mix(2).out(1)
-            self.dry= self.fireAll
+            self.dry= self.fireAllHP
             self.dry.out()
         elif x==3:
             #Aller chercher l'instrument Fat Bass du prof et modifier
@@ -161,7 +191,7 @@ class Audio:
             #Stop pluie
             self.pluieMatTest.stop()
             #stop Feu
-            self.fireAll.stop()
+            self.fireAllHP.stop()
             #stop bass
             self.fatbass.stop()
             
@@ -169,7 +199,7 @@ class Audio:
             #Stop feuilles
             self.ventTest.stop()
             #stop Feu
-            self.fireAll.stop()
+            self.fireAllHP.stop()
             #stop bass
             self.fatbass.stop()
             
@@ -185,7 +215,7 @@ class Audio:
             #Stop feuilles
             self.ventTest.stop()
             #stop Feu
-            self.fireAll.stop()
+            self.fireAllHP.stop()
             #Stop pluie
             self.pluieMatTest.stop()
         
@@ -193,7 +223,7 @@ class Audio:
             #Stop feuilles
             self.ventTest.stop()
             #stop Feu
-            self.fireAll.stop()
+            self.fireAllHP.stop()
             #Stop pluie
             self.pluieMatTest.stop()
             #stop bass

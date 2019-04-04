@@ -7,7 +7,8 @@ import math # pour PI
 class PluieMateriaux:
     """Pluie sur matériaux solide"""
     def __init__(self):
-        self.gaussianNoise_01 = self.gaussianNoise(0.4)
+        self.gaussianAmoutn = Sig(0.4)
+        self.gaussianNoise_01 = self.gaussianNoise(self.gaussianAmoutn)
 
         self.bp01 = ButBP(self.gaussianNoise_01, freq=50, q=0.4) # bp~ est aussi de second ordre.
 
@@ -41,6 +42,10 @@ class PluieMateriaux:
         self.output = self.squareRoot*self.noiseGaus02 # self.output est ton gaussian noise.
         return self.output
         
+    def gaussianChange(self, x):
+        """On change l'intensite de la pluie via un controle externe"""
+        self.gaussianAmoutn.value = x
+
     def volume(self, x):
         self.hp02.mul = x
 
