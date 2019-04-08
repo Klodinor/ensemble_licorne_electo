@@ -42,6 +42,14 @@ class MainFrame(wx.Frame):
         self.onOff.Bind(wx.EVT_TOGGLEBUTTON, self.handleAudio)
         """Gestion Acticvation du serveur Audio"""
         
+        """Gestion Calibration"""
+        self.onOffText = wx.StaticText(self.pnl, id=-1, label="Étalonnage",
+                                       pos=(28,80), size=wx.DefaultSize)
+        self.onOff = wx.ToggleButton(self.pnl, id=-1, label="Fait!",
+                                     pos=(10,98), size=wx.DefaultSize)
+        # Un event du toggle appelle la methode self.handleAudio
+        self.onOff.Bind(wx.EVT_TOGGLEBUTTON, self.handleCalibration)
+        """Fin gestion calibration"""
 
         '''Init des slider, btn & dropdown de mon interface -- provient des notes d'Olivier Belanger'''
         ############# Initialise la premiere barre d'effet pour l'instrumentiste 01#############
@@ -167,7 +175,11 @@ class MainFrame(wx.Frame):
     #Gestion activation de l'audio
     def handleAudio(self, evt):
         self.audio.startServer(evt.GetInt())
-    
+        
+    def handleCalibration(self, evt):
+        """Call calibraiton fonction"""
+        self.audio.doCalibration()
+
     def gestionEffets(self, evt):
         self.audio.effets(evt.GetInt())
         

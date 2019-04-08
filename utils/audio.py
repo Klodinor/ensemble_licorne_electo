@@ -21,6 +21,11 @@ class Audio:
 
         #Var global son actuel dry
         self.dry = Sig(0)
+        
+        #Var pour la calibration
+        self.yawAxisInDegCalib = 0
+        self.pitchAxisInDegCalib = 0
+        self.rollAxisInDegCalib = 0
 
         '''Bloc Initialisation Instruments'''
         #self.freqPort = SigTo(value=440, time=0.05, init=250)
@@ -82,6 +87,11 @@ class Audio:
         self.yawAxisInDeg = math.degrees(args[0])
         self.pitchAxisInDeg = math.degrees(args[1])
         self.rollAxisInDeg = math.degrees(args[2])
+        
+        #Pour la calibration
+        self.yawAxisInDegCalib = self.yawAxisInDeg
+        self.pitchAxisInDegCalib = self.pitchAxisInDeg
+        self.rollAxisInDegCalib = self.rollAxisInDeg
 
         '''### Action sur l'audio ###'''
         #self.outputEffetsVoice.value = self.yawAxisInDeg
@@ -241,6 +251,11 @@ class Audio:
             print('off')
             self.dry.out()
             self.outputEffets.stop()
+            
+    def doCalibration(self):
+        """Fait la calibration"""
+        print('calibrer')
+
             
 
 if __name__ == '__main__':

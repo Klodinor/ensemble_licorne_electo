@@ -1,10 +1,6 @@
 ################################################ Notes Gui ################################################ 
 
-- 10 potentiomètres de type slider pour le contrôle du gain des instrumentistes.
-
-
-
-- Série de toggle on/off avec dropdown pour la sélection/activation des effets (entre 4 et 6 (?)-- à déterminer).
+- 10 potentiomètres de type slider pour le contrôle du gain des instrumentistes. Avec un toggle pour activer les effets.
 
 
 
@@ -13,14 +9,6 @@
 
 
 - Reste à voir pour l'activation des séquences/sections. 
-
-
-
-- Voir 2.1.4, des notes sur wxPyhton pour les callback functions.
--- Btn = wx.EVT_TOGGLEBUTTON 
--- Dropdown = wx.EVT_CHOICE
--- slider = wx.EVT_SLIDER
--- Pour le moment aucune fonction n'est apellée ou écrite pour la gestion des événements en lien avec les éléments de l'interface graphique
 
 
 
@@ -43,20 +31,17 @@
 -- Nous donne un slider comme dans Cecilia.
 
 
-
-- Faire class Audio pour gestion des événements audio ? (voir exemple OLivier Bélanger)
-
-
-
-- Je vais peut-être devoir faire plusieurs copies de mes fonctions pour chaque instance de mes éléments graphiques (un slider de volume à sa propre fonction pour gérer le volume)
--- Trouver un work around
-
-
-
-
-
 ################################################ DONE ################################################
 
 - Les sliders verticals sont à 0 en haut et 100 en bas. Je dois trouver une manière de contourner le problème. -- FIX AVEC LES STYLES
 -- Simplement traiter les données pour faire l'inverse.
 -- Une solution possible est de mettre le slider dans un 'panel' qui lui est propre et repositionner celui-là
+- Série de toggle on/off avec dropdown pour la sélection/activation des effets (entre 4 et 6 (?)-- à déterminer).
+- Voir 2.1.4, des notes sur wxPyhton pour les callback functions.
+-- Btn = wx.EVT_TOGGLEBUTTON 
+-- Dropdown = wx.EVT_CHOICE
+-- slider = wx.EVT_SLIDER
+-- Pour le moment aucune fonction n'est apellée ou écrite pour la gestion des événements en lien avec les éléments de l'interface graphique
+- Faire class Audio pour gestion des événements audio ? (voir exemple OLivier Bélanger)
+- Je vais peut-être devoir faire plusieurs copies de mes fonctions pour chaque instance de mes éléments graphiques (un slider de volume à sa propre fonction pour gérer le volume)
+-- Trouver un work around
