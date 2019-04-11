@@ -92,8 +92,7 @@ class MainFrame(wx.Frame):
         # and a status bar -- un footer 
         #self.CreateStatusBar()
         #self.SetStatusText("Main User interface")
-
-
+        
     def makeMenuBar(self):
         """
         A menu bar is composed of menus, which are composed of menu items.
@@ -196,9 +195,29 @@ class MainFrame(wx.Frame):
         x = evt.GetInt()
         #Activer une classe de l'instrument en question
         self.audio.setInstrument(x)
+        
+    def midiVolumeChange(self, x):
+        """Doc string for fname function."""
+        self.volInst01.SetValue(x)
+        
 
 #POUR GERER mes 10 voix, passer une liste [Audio(), Audio(), etc] et les apellers avec audio[x] dans MainFrame()
 _audio = Audio()
+
+'''Gestion Voume MIDI'''
+def event(status, data1, data2):
+    #print(status, data1, data2)
+    if(data1 == 110):
+        #print(data2)
+        scaleVolume = rescale(data2, xmin=0, xmax=127, ymin=-60, ymax=18)
+        wx.CallAfter(midiVolume, time=1, arg=scaleVolume)
+def midiVolume(time, arg):
+    #print(arg)
+    frm.midiVolumeChange(arg)
+#call une fonction a chaque midi event    
+rawMidi = RawMidi(event)
+'''FIN Gestion Voume MIDI'''
+
 
 if __name__ == '__main__':
     # Quand le module n'est pas importé

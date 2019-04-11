@@ -10,7 +10,10 @@ from utils.fatbass import FatBass
 
 class Audio:
     def __init__(self):
-        self._server = Server().boot()
+        self._server = Server()
+        '''Ouvre tous les ports MIDI'''
+        self._server.setMidiInputDevice(99)
+        self._server.boot()
         #self._server.amp = 0.1
 
         #Quand je recois de l'osc j'execute la fonction pp
@@ -256,7 +259,6 @@ class Audio:
         """Fait la calibration"""
         print('calibrer')
 
-            
 
 if __name__ == '__main__':
     _server = Server(sr=44100, nchnls=2, buffersize=512, duplex=1).boot()
