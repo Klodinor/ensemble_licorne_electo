@@ -59,7 +59,7 @@ class Audio:
         #FatBass
         self.octave = Sine([0.15,0.13]).range(0.1, 0.9)
         self.duty = Sine([0.07, .1]).range(0.1, 0.5)
-        self.fatbass = FatBass(80*self.modifFondFatbass, self.octave, self.duty, 2500, 0, mul=0.4)#.out()
+        self.fatbass = FatBass(40+(40*self.modifFondFatbass), self.octave, self.duty, 2500, 0, mul=0.4)#.out()
         #self.fatbass.ctrl()
         '''FIN Bloc Initialisation Instruments'''
 
