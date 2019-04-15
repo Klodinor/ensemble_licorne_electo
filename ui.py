@@ -183,13 +183,18 @@ class MainFrame(wx.Frame):
         self.audio.effets(evt.GetInt())
         
     def changeVolume(self, evt):
-        #x = evt.GetInt() / 100
-        #formuleConvertionDb
-        x = 10**(evt.GetInt()/20)
+        if isinstance(evt, float):
+            x = 10**(evt/20)
+            self.audio.setVolume(x)
+        else:
+            #formuleConvertionDb
+            x = 10**(evt.GetInt()/20)
+            self.audio.setVolume(x)
+
+        #x = evt.GetInt() / 100 -->vieux volume
+
         #self.volInst01.SetLabel("Volume : %.3f" % x)
-        self.audio.setVolume(x)
         #sineTest.mul = x
-        #print(x)
         
     def changeInst(self, evt):
         x = evt.GetInt()
@@ -211,9 +216,11 @@ def event(status, data1, data2):
         #print(data2)
         scaleVolume = rescale(data2, xmin=0, xmax=127, ymin=-60, ymax=18)
         wx.CallAfter(midiVolume, time=1, arg=scaleVolume)
+        
 def midiVolume(time, arg):
     #print(arg)
     frm.midiVolumeChange(arg)
+    frm.changeVolume(arg)
 #call une fonction a chaque midi event    
 rawMidi = RawMidi(event)
 '''FIN Gestion Voume MIDI'''
