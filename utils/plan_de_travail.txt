@@ -119,6 +119,40 @@ reste du travail à faire pour que celui-ci soit convaincant.
 - 21 février 2019: Succès dans l'importation de l'interface graphique dans index.py. Reste à éclaircir quelques points pour qu'elle réagisse
 bien avec le restant du code. Ménage du projet et mise à jour du plan de travail en vue de l'évaluation de lundi.
 
+- 25 février 2019: Changement majeure dans l'architecture de mon programme. 'Index.py' ne sera finalement pas utilisé. Les intruments seront 
+gérés via un objet 'audio' à partir du fichier ui.py.
+
+- 06 mars 2019 : Modifications mineures sur l'interface graphique.
+
+- 12 mars 2019 : Programmation de la gestion des instruments via l'interface graphique. (communication : ui --> audio --> instruments)
+
+- 19 mars 2019 : Ajout de la gestion du volume des intruments Pluie et feuilles. Debut de l'implémentation de la gestion des volumes de tous 
+les instruments via l'interface graphique. Debut des essaies avec la réception de données par le protocole OSC.
+
+- 21 mars 2019 : Ajout de l'instrument 'fatBass' provenant des pyoTools. Finalisation de la sélection des intruments à partir de l'interface 
+graphique. Travail sur la gestion des volumes via l'interface graphique.
+
+- 25 mars 2019 : Finalisation de la gestion du volume via l'interface graphique. Courbes de volume de lin à log. Début de la gestion des effets 
+(activation) via l'interface graphique.
+
+- 26 mars 2019 : Petite modification par rapport au travail de la veile. Réception de données par OSC!
+
+- 28 mars 2019 : Base de la gestion des effects (activation) fait. Début du mappage des données OSC sur le contrôle des effets.
+
+- 01 avril 2019: Début de l'utilisation de 'scale' pour le mappage des données OSC. Modification Sur l'instrument feu, les quatres filtres son 
+désormaient fusionné. Ajout d'effet disponible dans le selector. Ménage dans les commentaires. 
+
+- 04 avril 2019 : Base du mapping sur les instruments, la position de l'IMU connecté au Feather affecte tous les instruments. 
+
+- 08 avril 2019 : Mise à jour des notes concernant l'interface graphique. Début de la gestion de la calibration. Modification sur l'interface 
+graphique. Début de la gestion du volume via un contrôlleur MIDI
+
+- 11 avril 2019 : Travail sur la gestion du volume via un contrôleur MIDI. 
+
+- 14 avril 2019 : Fine tuning du timbre de l'instrument 'Fatbass'
+
+- 15 avril 2019 : Finalisation de la gestion du volume via un contrôleur midi.
+
 
 
 ###################### Test et maintenance ######################
@@ -149,6 +183,37 @@ que j'ai commandées afin de construire mon premier dispositif et de commencer à 
 - Communication entre python/pyo et contrôleur MIDI: Outre la lecture des notes de cours et un test sommaire, je n'ai pas avancé beaucoup sur cet 
 aspect du projet. Pour le moment, je me concentre sur le bon fonctionnement de tous les éléments, une fois que tout fonctionnera bien, j'ajouterai 
 la possibilité de contrôler l'interface avec un contrôleur MIDI.
+
+
+** 28 avril 2019 **
+
+Les données arrivent entre -Pi et Pi. Les données sont ensuite map entre -180 et 180, avec la fonction math.degrees(). Je peux utiliser les données 
+tel quel ou effectuer un autre mappage afin d’affecter des paramètres pour lequel l’ambitus -180 à 180 serait trop grand. Possibilité de mettre les 
+données en positif grâce à la fonction abs().
+
+Pour les effets :
+La position en ‘yaw’ (axe des x), affecte l’attribut ‘voice’ d’un objet pyo ‘Selector’. Objet qui fait l’interpolation entre les différents objets 
+sonore qui lui sont passés en argument (dry, disto, reverb, delai, harmonizer, chorus).
+
+Pour les instruments :
+Feuilles vent : En changeant la valeur des axe ‘Pitch’ et ‘Roll’. Change la fréquence (en Hz) des deux OSC qui gère l’apparition et la répétition 
+des ‘bourrasque de vent ‘.
+Pluie : Change la quantité de pluie en fonction de la position en y.
+Feu : Les quatre feux filtrés passe dans un dernier filtre. La position en y change la position de la bande de ce dernier filtre et le roll augmente 
+la résonance (Q) du filtre.
+Fat Bass : La position de l’IMU en y change le pitch de l’instrument de la manière suivante : Hz fondamental = 40 + (40*données du capteur). Données 
+capteur = abs(PitchInDeg)/25
+
+Récapitulatif :
+Outre la gestion des séquences, j’ai pu mettre en place toutes les composantes que j’avais prévus en début de session dans mon plan de travail. Je 
+suis donc très satisfait de mon avancement et j’attends en ce moment la réponse d’une demande de financement afin de pourvoir continuer de travailler 
+sur ce projet cet été. Voici la liste des choses sur lesquelles je vais me pencher cet été :
+- Le timbre des instruments pour les rendre plus convaincant.
+- Avoir l’option de calibrer l’appareil.
+- Possibilité de changer les instruments via un contrôleur MIDI.
+- Régler le bug qui survient lorsque je change d’instrument pendant que les effets sont à ‘on’
+- Implémentation des séquences ou gestion prédéfini des effets et des instruments sur une durée pré déterminé. 
+- Possibilité d’avoir plusieurs effets et instruments en même temps sur une même tranche de l’interface graphique.
 
 
 
